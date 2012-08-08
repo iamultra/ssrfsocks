@@ -23,6 +23,7 @@ Example:
   $ echo -e "HELO localhost\nMAIL FROM:paul@victim.com\nRCPT TO: paul@ultramegaman.com\nDATA\nSubject: test\n\nthis is a test\n.\nQUIT\n" | proxychains nc 127.0.0.1 25
 
   In the above scenario, it's necessary to configure proxychains.conf:
+  
     [ProxyList]
     socks4 127.0.0.1 65432
 
